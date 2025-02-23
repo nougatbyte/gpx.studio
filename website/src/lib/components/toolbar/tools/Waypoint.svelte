@@ -20,7 +20,7 @@
     import { onDestroy, onMount } from 'svelte';
     import { map } from '$lib/stores';
     import { getURLForLanguage, resetCursor, setCrosshairCursor } from '$lib/utils';
-    import { MapPin, CircleX, Save } from 'lucide-svelte';
+    import { MapPin, CircleX, Save, ClipboardCopy } from 'lucide-svelte';
     import { getSymbolKey, symbols } from '$lib/assets/symbols';
 
     let name: string;
@@ -228,7 +228,7 @@
             class="h-8"
             disabled={!canCreate && !$selectedWaypoint}
         />
-        <div class="flex flex-row gap-2">
+        <div class="flex flex-row gap-2 items-end">
             <div class="grow">
                 <Label for="latitude">{$_('toolbar.waypoint.latitude')}</Label>
                 <Input
@@ -255,6 +255,15 @@
                     disabled={!canCreate && !$selectedWaypoint}
                 />
             </div>
+            <Button
+                class="h-fit"
+                variant="outline"
+                on:click={() => {
+                    navigator.clipboard.writeText(`${latitude}, ${longitude}`);
+                }}
+            >
+                <ClipboardCopy size="16" />
+            </Button>
         </div>
     </fieldset>
     <div class="flex flex-row gap-2 items-center">
